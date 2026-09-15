@@ -3,315 +3,1691 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Data Analyst Learning Portal</title>
+
+<!-- Certificate PDF Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+
 :root{
-  --bg:#eef4ff;--surface:rgba(255,255,255,.78);--text:#17365d;--muted:#60758e;
-  --nav:#062b55;--primary:#1677ed;--shadow:0 18px 45px rgba(15,48,90,.16);
+    --bg:#eef3f9;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --primary:#2563eb;
+    --secondary:#7c3aed;
+    --nav:#0f172a;
+    --shadow:0 20px 40px rgba(15,23,42,.15);
+    --border:rgba(255,255,255,.7);
 }
+
 body.dark{
-  --bg:#07111f;--surface:rgba(17,29,47,.88);--text:#eaf3ff;--muted:#a7b8ca;
-  --nav:#020914;--shadow:0 18px 45px rgba(0,0,0,.42);
+    --bg:#07111f;
+    --card:#101c2d;
+    --text:#f8fafc;
+    --muted:#a8b3c5;
+    --primary:#60a5fa;
+    --secondary:#a78bfa;
+    --nav:#020617;
+    --shadow:0 20px 45px rgba(0,0,0,.45);
+    --border:rgba(255,255,255,.08);
 }
-body{background:radial-gradient(circle at 10% 10%,#d9ecff,transparent 30%),var(--bg);color:var(--text);min-height:100vh;transition:.3s}
-body.dark{background:radial-gradient(circle at 10% 10%,#122a46,transparent 30%),var(--bg)}
 
-button,a{font:inherit}
-.navbar{position:sticky;top:0;z-index:100;background:rgba(6,43,85,.94);backdrop-filter:blur(15px);color:#fff;padding:13px 4%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;box-shadow:0 8px 30px #0002}
-.logo{display:flex;align-items:center;gap:10px;font-size:23px;font-weight:bold}
-.logo span{color:#29b6f6}.logo-icon{font-size:27px;color:#20b8ef}
-.nav-links{display:flex;gap:7px;list-style:none;flex-wrap:wrap;justify-content:center}
-.nav-links a{color:#fff;text-decoration:none;padding:10px 13px;border-radius:9px;cursor:pointer}
-.nav-links a:hover,.nav-links a.active{background:#1677ed;box-shadow:0 5px 15px #1677ed66}
-.nav-actions{display:flex;gap:8px}
-.icon-btn{border:0;background:#ffffff20;color:white;border-radius:10px;padding:10px 12px;cursor:pointer}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
 
-.hero{min-height:330px;padding:55px 6%;display:flex;align-items:center;justify-content:space-between;gap:30px;background:linear-gradient(110deg,#eef8ffb8,#dceeff88);perspective:1000px}
-body.dark .hero{background:linear-gradient(110deg,#10263dbb,#0b1828aa)}
-.hero-text{max-width:720px}
-.hero-text h4{font-size:20px;margin-bottom:8px}
-.hero-text h1{font-size:44px;margin-bottom:18px}
-.hero-text h1 span{color:#0878ed}
-.hero-text p{font-size:17px;line-height:1.65;color:var(--muted)}
-.start-btn,.btn{display:block;text-decoration:none;color:white;border:0;cursor:pointer;margin-top:20px;padding:13px 17px;border-radius:10px;font-weight:bold}
-.start-btn{display:inline-block;background:#1479ed;box-shadow:0 10px 25px #1479ed55}
-.hero-image{font-size:145px;filter:drop-shadow(18px 25px 12px #0003);transform:rotateY(-14deg) rotateX(8deg);animation:float 4s ease-in-out infinite}
-@keyframes float{50%{transform:rotateY(14deg) rotateX(-5deg) translateY(-14px)}}
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%,rgba(37,99,235,.12),transparent 25%),
+        radial-gradient(circle at 90% 20%,rgba(124,58,237,.12),transparent 25%),
+        var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    transition:.4s;
+}
 
-.section{padding:38px 4%;max-width:1500px;margin:auto}
-.section-title{font-size:29px;margin-bottom:8px}.section-subtitle{color:var(--muted);margin-bottom:25px}
+/* ================= NAVBAR ================= */
 
-.course-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;perspective:1200px}
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(15,23,42,.94);
+    backdrop-filter:blur(15px);
+    box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+
+.nav-container{
+    max-width:1250px;
+    margin:auto;
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    color:white;
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:.5px;
+    white-space:nowrap;
+    text-shadow:0 4px 10px rgba(0,0,0,.4);
+}
+
+.nav-links{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.nav-links a,
+.nav-button{
+    color:white;
+    text-decoration:none;
+    padding:10px 13px;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:600;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.nav-links a:hover,
+.nav-button:hover{
+    background:rgba(255,255,255,.12);
+    transform:translateY(-2px);
+}
+
+.theme-btn{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    background:linear-gradient(145deg,#ffffff,#cbd5e1);
+    box-shadow:
+        5px 5px 10px rgba(0,0,0,.25),
+        -3px -3px 8px rgba(255,255,255,.3);
+    font-size:18px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    max-width:1250px;
+    margin:50px auto 30px;
+    padding:70px 30px;
+    text-align:center;
+    border-radius:30px;
+
+    background:
+        linear-gradient(135deg,
+        rgba(37,99,235,.95),
+        rgba(124,58,237,.95));
+
+    color:white;
+
+    box-shadow:
+        0 25px 50px rgba(37,99,235,.25),
+        inset 0 1px rgba(255,255,255,.3);
+
+    transform:perspective(1200px) rotateX(0deg);
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:15px;
+    text-shadow:0 7px 15px rgba(0,0,0,.3);
+}
+
+.hero p{
+    font-size:19px;
+    opacity:.92;
+}
+
+.hero-badge{
+    display:inline-block;
+    margin-top:25px;
+    padding:10px 20px;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.3);
+    border-radius:50px;
+    backdrop-filter:blur(10px);
+}
+
+/* ================= SECTION ================= */
+
+.section{
+    max-width:1250px;
+    margin:50px auto;
+    padding:20px;
+}
+
+.section-title{
+    text-align:center;
+    font-size:34px;
+    margin-bottom:35px;
+}
+
+.section-title span{
+    color:var(--primary);
+}
+
+/* ================= COURSE GRID ================= */
+
+.course-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:22px;
+}
+
+/* ================= 3D CARD ================= */
+
 .course-card{
-  position:relative;padding:25px 16px;border-radius:18px;text-align:center;min-height:350px;
-  box-shadow:var(--shadow);transform-style:preserve-3d;transition:transform .35s,box-shadow .35s;cursor:pointer;
-  border:1px solid #ffffff55;overflow:hidden
+    position:relative;
+    background:var(--card);
+    border-radius:24px;
+    padding:25px 20px;
+    min-height:350px;
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    transform-style:preserve-3d;
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+
+    overflow:hidden;
 }
-.course-card:hover{transform:translateY(-12px) rotateX(4deg) rotateY(-5deg) scale(1.025);box-shadow:0 28px 55px #0003}
-.course-card:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;background:#fff5;top:-70px;right:-50px;filter:blur(3px)}
-.excel{background:linear-gradient(145deg,#dff8e9,#a9e8c2)}.sql{background:linear-gradient(145deg,#e0f0ff,#a7d4ff)}
-.python{background:linear-gradient(145deg,#eee5ff,#cdbbff)}.powerbi{background:linear-gradient(145deg,#fff6c9,#ffe078)}
-.ml{background:linear-gradient(145deg,#ffe3f1,#ffafd1)}
-.course-icon{font-size:62px;transform:translateZ(35px);filter:drop-shadow(7px 9px 5px #0003)}
-.course-card h2{margin:15px 0;transform:translateZ(25px)}
-.course-card p{color:#304f6d;line-height:1.55;min-height:78px;transform:translateZ(18px)}
-.course-card .btn{transform:translateZ(22px)}
-.btn-notes{background:#087d55}.btn-video{background:#075dbd}
-.sql .btn-notes,.sql .btn-video{background:#087de0}.python .btn-notes,.python .btn-video{background:#6041c7}
-.powerbi .btn-notes,.powerbi .btn-video{background:#b48600}.ml .btn-notes,.ml .btn-video{background:#c52d7c}
-.btn:hover,.certificate-btn:hover,.start-btn:hover{filter:brightness(1.08);transform:translateY(-2px)}
 
-.lower-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:22px}
-.box{background:var(--surface);backdrop-filter:blur(12px);border-radius:18px;padding:30px;box-shadow:var(--shadow);border:1px solid #ffffff35}
-.project-list{list-style:none;margin-top:15px}.project-list li{padding:10px 0;color:var(--muted)}
-.project-list li:before{content:"✓";color:#15956c;font-weight:bold;margin-right:10px}
-.certificate{text-align:center}.certificate-card{margin:20px auto;max-width:330px;padding:32px 20px;border:4px solid #e2b735;background:#fffdf3;color:#26364d;box-shadow:inset 0 0 0 3px #fff,0 15px 30px #0002}
-.certificate-btn{display:block;background:#6240c5;color:#fff;padding:13px;text-decoration:none;border-radius:10px;cursor:pointer;border:0;width:100%}
-
-footer{margin-top:30px;background:var(--nav);color:white;padding:20px 5%;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
-footer span{color:#28b8ef}
-
-.overlay{position:fixed;inset:0;background:#020914cc;backdrop-filter:blur(10px);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px}
-.login-box{width:min(410px,100%);background:var(--surface);color:var(--text);padding:35px;border-radius:22px;box-shadow:0 30px 80px #0007;text-align:center}
-.login-box h1{margin-bottom:8px}.login-box p{color:var(--muted);margin-bottom:22px}
-.login-box input{width:100%;padding:13px;margin:7px 0;border:1px solid #aaa6;border-radius:10px;background:#fff;color:#222}
-.login-box button{width:100%;padding:13px;margin-top:10px;border:0;border-radius:10px;background:#1677ed;color:#fff;font-weight:bold;cursor:pointer}
-.error{color:#e53935!important;min-height:20px;margin-top:10px!important}
-.hidden{display:none!important}
-
-.modal{position:fixed;inset:0;z-index:300;background:#020914b8;backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
-.modal-content{width:min(800px,100%);max-height:90vh;overflow:auto;background:var(--surface);border-radius:22px;padding:30px;box-shadow:0 30px 80px #0008;color:var(--text)}
-.close{float:right;border:0;background:#0002;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:20px;color:var(--text)}
-.modal h2{font-size:32px;margin:10px 0}.modal ul{padding-left:22px;line-height:1.9;color:var(--muted)}
-.course-head{display:grid;grid-template-columns:100px 1fr;gap:20px;align-items:center;margin-bottom:20px}
-.big-icon{font-size:80px}
-.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
-.modal-actions button{padding:13px;border:0;border-radius:10px;color:white;cursor:pointer;font-weight:bold}
-
-@media(max-width:1100px){.course-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){
- .navbar{justify-content:center}.hero{text-align:center;flex-direction:column}.hero-text h1{font-size:33px}.hero-image{font-size:90px}
- .course-grid,.lower-grid{grid-template-columns:1fr}.modal-actions{grid-template-columns:1fr}
+.course-card::before{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:linear-gradient(
+        135deg,
+        rgba(37,99,235,.2),
+        rgba(124,58,237,.2)
+    );
+    top:-70px;
+    right:-70px;
 }
+
+.course-card:hover{
+    transform:
+        perspective(1000px)
+        rotateX(5deg)
+        rotateY(-5deg)
+        translateY(-12px)
+        scale(1.02);
+
+    box-shadow:
+        0 35px 65px rgba(15,23,42,.25),
+        0 10px 20px rgba(37,99,235,.12);
+}
+
+.course-icon{
+    width:75px;
+    height:75px;
+    margin:auto;
+    border-radius:20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:35px;
+
+    background:linear-gradient(
+        145deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    color:white;
+
+    box-shadow:
+        8px 8px 15px rgba(15,23,42,.2),
+        inset 2px 2px 5px rgba(255,255,255,.3);
+
+    transform:translateZ(35px);
+}
+
+.course-card h3{
+    text-align:center;
+    margin:25px 0 10px;
+    font-size:23px;
+    transform:translateZ(30px);
+}
+
+.course-card p{
+    text-align:center;
+    color:var(--muted);
+    line-height:1.5;
+    min-height:70px;
+    transform:translateZ(20px);
+}
+
+/* ================= BUTTONS ================= */
+
+.card-buttons{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    margin-top:20px;
+}
+
+.btn{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+
+    padding:11px 12px;
+    border-radius:12px;
+
+    color:white;
+    font-weight:700;
+    font-size:14px;
+
+    box-shadow:
+        0 7px 0 rgba(0,0,0,.18),
+        0 12px 20px rgba(0,0,0,.12);
+
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+    box-shadow:
+        0 10px 0 rgba(0,0,0,.15),
+        0 18px 25px rgba(0,0,0,.15);
+}
+
+.btn:active{
+    transform:translateY(3px);
+    box-shadow:
+        0 3px 0 rgba(0,0,0,.18);
+}
+
+.btn-notes{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+}
+
+.btn-video{
+    background:linear-gradient(135deg,#dc2626,#991b1b);
+}
+
+.btn-cert{
+    background:linear-gradient(135deg,#f59e0b,#d97706);
+}
+
+/* ================= CERTIFICATE ================= */
+
+.certificate-box{
+    max-width:850px;
+    margin:auto;
+
+    background:var(--card);
+    padding:40px;
+
+    border-radius:28px;
+
+    box-shadow:var(--shadow);
+
+    text-align:center;
+
+    transform-style:preserve-3d;
+}
+
+.certificate-box:hover{
+    transform:
+        perspective(1000px)
+        rotateX(2deg)
+        rotateY(-2deg)
+        translateY(-5px);
+}
+
+.certificate-box h2{
+    margin-bottom:15px;
+}
+
+.certificate-box p{
+    color:var(--muted);
+    margin-bottom:25px;
+}
+
+select{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #cbd5e1;
+    background:var(--card);
+    color:var(--text);
+    font-size:16px;
+    margin-bottom:20px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    margin-top:60px;
+    padding:30px 20px;
+    text-align:center;
+    background:var(--nav);
+    color:white;
+}
+
+footer strong{
+    color:#60a5fa;
+}
+
+/* ================= LOGIN ================= */
+
+.login-overlay{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(37,99,235,.25),
+            rgba(2,6,23,.98)
+        );
+
+    backdrop-filter:blur(12px);
+}
+
+.login-box{
+    width:390px;
+    max-width:92%;
+
+    padding:40px 30px;
+
+    background:rgba(255,255,255,.96);
+
+    border-radius:28px;
+
+    text-align:center;
+
+    box-shadow:
+        0 40px 80px rgba(0,0,0,.5),
+        inset 0 1px rgba(255,255,255,.8);
+
+    transform:
+        perspective(1000px)
+        rotateX(4deg)
+        rotateY(-4deg);
+}
+
+.login-icon{
+    width:80px;
+    height:80px;
+    margin:auto;
+
+    border-radius:22px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    color:white;
+    font-size:35px;
+
+    box-shadow:
+        10px 10px 20px rgba(0,0,0,.25);
+}
+
+.login-box h2{
+    margin:22px 0 8px;
+    color:#172033;
+}
+
+.login-box p{
+    color:#667085;
+    margin-bottom:22px;
+}
+
+.login-input{
+    width:100%;
+    padding:14px;
+    margin:7px 0;
+
+    border:1px solid #d0d5dd;
+    border-radius:12px;
+
+    font-size:15px;
+    outline:none;
+}
+
+.login-input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+}
+
+.login-btn{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+
+    border:none;
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    color:white;
+    font-weight:bold;
+    font-size:16px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 0 #312e81,
+        0 15px 25px rgba(37,99,235,.3);
+}
+
+.login-btn:active{
+    transform:translateY(5px);
+    box-shadow:0 3px 0 #312e81;
+}
+
+.login-error{
+    color:#dc2626;
+    margin-top:12px;
+    display:none;
+    font-weight:bold;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    display:none;
+
+    position:fixed;
+    inset:0;
+
+    z-index:5000;
+
+    background:rgba(0,0,0,.7);
+
+    backdrop-filter:blur(8px);
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+}
+
+.modal-box{
+    width:600px;
+    max-width:100%;
+
+    background:var(--card);
+
+    border-radius:25px;
+
+    padding:35px;
+
+    box-shadow:
+        0 35px 80px rgba(0,0,0,.5);
+
+    transform:
+        perspective(1000px)
+        rotateX(3deg)
+        rotateY(-3deg);
+}
+
+.modal-close{
+    float:right;
+
+    border:none;
+
+    width:38px;
+    height:38px;
+
+    border-radius:50%;
+
+    background:#ef4444;
+    color:white;
+
+    cursor:pointer;
+
+    font-size:18px;
+}
+
+.modal-box h2{
+    margin-bottom:15px;
+}
+
+.modal-box p{
+    color:var(--muted);
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+.modal-links{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+/* ================= LOGOUT ================= */
+
+.logout-btn{
+    background:#dc2626 !important;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1100px){
+
+    .course-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:750px){
+
+    .nav-container{
+        flex-direction:column;
+    }
+
+    .nav-links{
+        width:100%;
+    }
+
+    .hero h1{
+        font-size:35px;
+    }
+
+    .course-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .modal-links{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .course-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        margin:25px 15px;
+        padding:50px 20px;
+    }
+
+    .section{
+        padding:15px;
+    }
+
+    .login-box{
+        padding:30px 20px;
+    }
+
+}
+
 </style>
 </head>
 
+
 <body>
 
-<!-- LOGIN -->
-<div class="overlay" id="loginOverlay">
-  <div class="login-box">
-    <div style="font-size:55px">🔐</div>
-    <h1>Learning Portal Login</h1>
-    <p>Login to access the Data Analyst courses.</p>
-    <input id="username" type="text" placeholder="Username">
-    <input id="password" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <p class="error" id="loginError"></p>
-    <small>Demo login: <b>admin</b> / <b>12345</b></small>
-  </div>
+
+<!-- ================= LOGIN ================= -->
+
+<div class="login-overlay" id="loginOverlay">
+
+    <div class="login-box">
+
+        <div class="login-icon">
+            🔐
+        </div>
+
+        <h2>Data Analyst Portal</h2>
+
+        <p>Login to access your learning portal</p>
+
+        <input
+            type="text"
+            id="username"
+            class="login-input"
+            placeholder="Username"
+        >
+
+        <input
+            type="password"
+            id="password"
+            class="login-input"
+            placeholder="Password"
+        >
+
+        <button
+            class="login-btn"
+            onclick="login()"
+        >
+            LOGIN
+        </button>
+
+        <div
+            class="login-error"
+            id="loginError"
+        >
+            Invalid username or password
+        </div>
+
+    </div>
+
 </div>
+
+
+<!-- ================= NAVBAR ================= -->
 
 <nav class="navbar">
-  <div class="logo"><div class="logo-icon">▮▮▮</div>Data Analyst <span>Learning Portal</span></div>
-  <ul class="nav-links">
-    <li><a class="active" href="#home">Home</a></li>
-    <li><a href="#courses">Courses</a></li>
-    <li><a href="#certificate">Certificates</a></li>
-  </ul>
-  <div class="nav-actions">
-    <button class="icon-btn" onclick="toggleTheme()" title="Dark / Light">☀️ / 🌙</button>
-    <button class="icon-btn" onclick="logout()">Logout</button>
-  </div>
+
+    <div class="nav-container">
+
+        <div class="logo">
+            📊 Data Analyst Portal
+        </div>
+
+        <div class="nav-links">
+
+            <a href="#home">Home</a>
+
+            <a href="#excel">Excel</a>
+
+            <a href="#sql">SQL</a>
+
+            <a href="#python">Python</a>
+
+            <a href="#powerbi">Power BI</a>
+
+            <a href="#machinelearning">
+                Machine Learning
+            </a>
+
+            <a href="#certificate">
+                Certificate
+            </a>
+
+            <button
+                class="theme-btn"
+                onclick="toggleTheme()"
+                id="themeButton"
+                title="Dark / Light Mode"
+            >
+                🌙
+            </button>
+
+            <button
+                class="nav-button logout-btn"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
 </nav>
 
+
+<!-- ================= HERO ================= -->
+
 <section class="hero" id="home">
-  <div class="hero-text">
-    <h4>Welcome to</h4>
-    <h1>Data Analyst <span>Learning Portal</span></h1>
-    <p>Learn Data Analysis skills from basics to advanced level with notes, videos, projects and course certificates.</p>
-    <a href="#courses" class="start-btn">▶ Start Learning</a>
-  </div>
-  <div class="hero-image">📊</div>
+
+    <h1>
+        Data Analyst Learning Portal
+    </h1>
+
+    <p>
+        Learn • Practice • Build Projects • Get Certified
+    </p>
+
+    <div class="hero-badge">
+        Excel → SQL → Python → Power BI → Machine Learning
+    </div>
+
 </section>
+
+
+<!-- ================= COURSES ================= -->
 
 <section class="section" id="courses">
-  <h2 class="section-title">📖 Our Courses</h2>
-  <p class="section-subtitle">Click any course heading/card to open its course page. Notes and videos open in separate tabs.</p>
 
-  <div class="course-grid">
+    <h2 class="section-title">
+        <span>Courses</span>
+    </h2>
 
-    <div class="course-card excel" onclick="openCourse('Excel')">
-      <div class="course-icon">📗</div><h2>Excel</h2>
-      <p>Learn data cleaning, analysis, charts and reports using Microsoft Excel.</p>
-      <a class="btn btn-notes" href="YOUR_EXCEL_NOTES_LINK" target="_blank" onclick="event.stopPropagation()">📄 Notes</a>
-      <a class="btn btn-video" href="https://drive.google.com/drive/folders/1ZNZ9x45vs8H-HtyryU8KTnOHcTjNyIdS" target="_blank" onclick="event.stopPropagation()">▶ Videos</a>
+
+    <div class="course-grid">
+
+
+        <!-- EXCEL -->
+
+        <div
+            class="course-card"
+            id="excel"
+            onclick="openCourse('Excel')"
+        >
+
+            <div class="course-icon">
+                📊
+            </div>
+
+            <h3>
+                Excel
+            </h3>
+
+            <p>
+                Data cleaning, analysis, formulas,
+                charts and reporting using Microsoft Excel.
+            </p>
+
+            <div class="card-buttons">
+
+                <a
+                    class="btn btn-notes"
+                    href="https://drive.google.com/drive/folders/1ZNZ9x45vs8H-HtyryU8KTnOHcTjNyIdS?usp=drive_link"
+                    target="_blank"
+                    onclick="event.stopPropagation()"
+                >
+                    📄 Notes
+                </a>
+
+                <a
+                    class="btn btn-video"
+                    href="https://docs.google.com/spreadsheets/d/1-s0Pke3PSntqASYxfvy3uYKDPtm-hYieB1QVCMmXVgA/edit?usp=drive_link"
+                    target="_blank"
+                    onclick="event.stopPropagation()"
+                >
+                    ▶ Videos
+                </a>
+
+                <a
+                    class="btn btn-cert"
+                    href="#certificate"
+                    onclick="event.stopPropagation();downloadCertificate('Excel')"
+                >
+                    🏆 Certificate
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- SQL -->
+
+        <div
+            class="course-card"
+            id="sql"
+            onclick="openCourse('SQL')"
+        >
+
+            <div class="course-icon">
+                🗄️
+            </div>
+
+            <h3>
+                SQL
+            </h3>
+
+            <p>
+                Learn SQL queries, joins, filtering,
+                aggregation and database analysis.
+            </p>
+
+            <div class="card-buttons">
+
+                <a
+                    class="btn btn-notes"
+                    href="https://drive.google.com/drive/folders/1bMcVEHtN1FZx1ytTzLNcNsa5uzqU1hlo?usp=drive_link"
+                    target="_blank"
+                    onclick="event.stopPropagation()"
+                >
+                    📄 Notes
+                </a>
+
+                <a
+                    class="btn btn-video"
+                    href="https://docs.google.com/spreadsheets/d/14gv9XEfDqWP-sG2126vHZu0-R8YN6l5zmcacABzdWes/edit?usp=drive_link"
+                    target="_blank"
+                    onclick="event.stopPropagation()"
+                >
+                    ▶ Videos
+                </a>
+
+                <a
+                    class="btn btn-cert"
+                    href="#certificate"
+                    onclick="event.stopPropagation();downloadCertificate('SQL')"
+                >
+                    🏆 Certificate
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- PYTHON -->
+
+        <div
+            class="course-card"
+            id="python"
+            onclick="openCourse('Python')"
+        >
+
+            <div class="course-icon">
+                🐍
+            </div>
+
+            <h3>
+                Python
+            </h3>
+
+            <p>
+                Python programming, data analysis,
+                Pandas, NumPy and visualization.
+            </p>
+
+            <div class="card-buttons">
+
+                <a
+                    class="btn btn-notes"
+                    href="https://drive.google.com/drive/folders/1Z-yYA9EuSxAKvdKbCQ4ajf3B86DGv7GT?usp=drive_link"
+                    target="_blank"
+                    onclick="event.stopPropagation()"
+                >
+                    📄 Notes
+                </a>
+
+                <a
+                    class="btn btn-video"
+                    href="https://docs.google.com/spreadsheets/d/1V-t8piBKwBKFTcbYys-KN5qDtysYt9EPZ_ssloZebbk/edit?usp=drive_link"
+                    target="_blank"
+                    onclick="event.stopPropagation()"
+                >
+                    ▶ Videos
+                </a>
+
+                <a
+                    class="btn btn-cert"
+                    href="#certificate"
+                    onclick="event.stopPropagation();downloadCertificate('Python')"
+                >
+                    🏆 Certificate
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- POWER BI -->
+
+        <div
+            class="course-card"
+            id="powerbi"
+            onclick="openCourse('Power BI')"
+        >
+
+            <div class="course-icon">
+                📈
+            </div>
+
+            <h3>
+                Power BI
+            </h3>
+
+            <p>
+                Create interactive dashboards,
+                reports and professional data visualizations.
+            </p>
+
+            <div class="card-buttons">
+
+                <a
+                    class="btn btn-notes"
+                    href="https://drive.google.com/drive/folders/1KPEKh3I0e569pCpobuYXSdkKizDE3emI?usp=drive_link"
+                    target="_blank"
+                    onclick="event.stopPropagation()"
+                >
+                    📄 Notes
+                </a>
+
+                <a
+                    class="btn btn-video"
+                    href="https://docs.google.com/spreadsheets/d/1KSSbbfTlCp6hxbW8YQ_TS_dhYGOsTfKQKW2yzViDdCQ/edit?usp=drive_link"
+                    target="_blank"
+                    onclick="event.stopPropagation()"
+                >
+                    ▶ Videos
+                </a>
+
+                <a
+                    class="btn btn-cert"
+                    href="#certificate"
+                    onclick="event.stopPropagation();downloadCertificate('Power BI')"
+                >
+                    🏆 Certificate
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- MACHINE LEARNING -->
+
+        <div
+            class="course-card"
+            id="machinelearning"
+            onclick="openCourse('Machine Learning')"
+        >
+
+            <div class="course-icon">
+                🤖
+            </div>
+
+            <h3>
+                Machine Learning
+            </h3>
+
+            <p>
+                Machine Learning concepts,
+                algorithms and real-world applications.
+            </p>
+
+            <div class="card-buttons">
+
+                <a
+                    class="btn btn-notes"
+                    href="https://drive.google.com/drive/folders/1lJ4Kg9_znEJOa8ApLhh63la-gB0F5uFm?usp=drive_link"
+                    target="_blank"
+                    onclick="event.stopPropagation()"
+                >
+                    📄 Notes
+                </a>
+
+                <a
+                    class="btn btn-video"
+                    href="https://docs.google.com/spreadsheets/d/134kQkwHjjd612tgWAdRz1c_j9tAnfXkKfoB-CKYpc4Q/edit?usp=drive_link"
+                    target="_blank"
+                    onclick="event.stopPropagation()"
+                >
+                    ▶ Videos
+                </a>
+
+                <a
+                    class="btn btn-cert"
+                    href="#certificate"
+                    onclick="event.stopPropagation();downloadCertificate('Machine Learning')"
+                >
+                    🏆 Certificate
+                </a>
+
+            </div>
+
+        </div>
+
+
     </div>
 
-    <div class="course-card sql" onclick="openCourse('SQL')">
-      <div class="course-icon">🗄️</div><h2>SQL</h2>
-      <p>Learn to query, manage and analyze data using SQL.</p>
-      <a class="btn btn-notes" href="YOUR_SQL_NOTES_LINK" target="_blank" onclick="event.stopPropagation()">📄 Notes</a>
-      <a class="btn btn-video" href="YOUR_SQL_VIDEO_LINK" target="_blank" onclick="event.stopPropagation()">▶ Videos</a>
-    </div>
-
-    <div class="course-card python" onclick="openCourse('Python')">
-      <div class="course-icon">🐍</div><h2>Python</h2>
-      <p>Learn data analysis, data manipulation and visualization using Python.</p>
-      <a class="btn btn-notes" href="YOUR_PYTHON_NOTES_LINK" target="_blank" onclick="event.stopPropagation()">📄 Notes</a>
-      <a class="btn btn-video" href="YOUR_PYTHON_VIDEO_LINK" target="_blank" onclick="event.stopPropagation()">▶ Videos</a>
-    </div>
-
-    <div class="course-card powerbi" onclick="openCourse('Power BI')">
-      <div class="course-icon">📊</div><h2>Power BI</h2>
-      <p>Learn to create interactive dashboards and visualizations.</p>
-      <a class="btn btn-notes" href="YOUR_POWERBI_NOTES_LINK" target="_blank" onclick="event.stopPropagation()">📄 Notes</a>
-      <a class="btn btn-video" href="YOUR_POWERBI_VIDEO_LINK" target="_blank" onclick="event.stopPropagation()">▶ Videos</a>
-    </div>
-
-    <div class="course-card ml" onclick="openCourse('Machine Learning')">
-      <div class="course-icon">🧠</div><h2>Machine Learning</h2>
-      <p>Learn ML concepts, algorithms and real-world applications.</p>
-      <a class="btn btn-notes" href="YOUR_ML_NOTES_LINK" target="_blank" onclick="event.stopPropagation()">📄 Notes</a>
-      <a class="btn btn-video" href="YOUR_ML_VIDEO_LINK" target="_blank" onclick="event.stopPropagation()">▶ Videos</a>
-    </div>
-
-  </div>
 </section>
 
-<section class="section" id="certificate">
-  <div class="lower-grid">
-    <div class="box">
-      <h2>💻 Projects</h2>
-      <p style="color:var(--muted)">Explore real-world projects to strengthen your skills and build your portfolio.</p>
-      <ul class="project-list">
-        <li>Excel Data Analysis Project</li>
-        <li>SQL Project</li>
-        <li>Python Data Analysis Project</li>
-        <li>Power BI Dashboard</li>
-        <li>Machine Learning Project</li>
-      </ul>
+
+<!-- ================= CERTIFICATE ================= -->
+
+<section
+    class="section"
+    id="certificate"
+>
+
+    <h2 class="section-title">
+        <span>Course Certificate</span>
+    </h2>
+
+    <div class="certificate-box">
+
+        <h2>
+            🏆 Download Your Certificate
+        </h2>
+
+        <p>
+            Select the course you completed and
+            download your certificate.
+        </p>
+
+        <select id="certificateCourse">
+
+            <option value="Excel">
+                Excel
+            </option>
+
+            <option value="SQL">
+                SQL
+            </option>
+
+            <option value="Python">
+                Python
+            </option>
+
+            <option value="Power BI">
+                Power BI
+            </option>
+
+            <option value="Machine Learning">
+                Machine Learning
+            </option>
+
+        </select>
+
+        <button
+            class="btn btn-cert"
+            style="width:100%"
+            onclick="downloadSelectedCertificate()"
+        >
+            🏆 Download Certificate
+        </button>
+
     </div>
 
-    <div class="box certificate">
-      <h2>🎓 Course Certificates</h2>
-      <p style="color:var(--muted)">Select a course and download its certificate.</p>
-      <div class="certificate-card">
-        <div style="font-size:50px">🏆</div>
-        <h3 id="certCourse">COURSE CERTIFICATE</h3>
-        <p>Data Analyst Learning Portal</p>
-      </div>
-      <button class="certificate-btn" onclick="chooseCertificate()">🏆 Download Certificate</button>
-    </div>
-  </div>
 </section>
 
-<footer>
-  <div>📊 <span>Data Analyst Learning Portal</span></div>
-  <div>Learn • Practice • Grow</div>
-  <div>For Future Data Analysts</div>
-</footer>
 
-<!-- COURSE MODAL -->
-<div class="modal" id="courseModal">
-  <div class="modal-content">
-    <button class="close" onclick="closeModal()">×</button>
-    <div class="course-head">
-      <div class="big-icon" id="modalIcon">📗</div>
-      <div><h2 id="modalTitle"></h2><p id="modalDesc" style="color:var(--muted)"></p></div>
+<!-- ================= COURSE MODAL ================= -->
+
+<div
+    class="modal"
+    id="courseModal"
+    onclick="closeModal(event)"
+>
+
+    <div
+        class="modal-box"
+        onclick="event.stopPropagation()"
+    >
+
+        <button
+            class="modal-close"
+            onclick="closeCourseModal()"
+        >
+            ×
+        </button>
+
+        <h2 id="modalTitle">
+            Course
+        </h2>
+
+        <p id="modalDescription">
+            Course description
+        </p>
+
+        <div class="modal-links">
+
+            <a
+                id="modalNotes"
+                class="btn btn-notes"
+                target="_blank"
+            >
+                📄 Open Notes
+            </a>
+
+            <a
+                id="modalVideo"
+                class="btn btn-video"
+                target="_blank"
+            >
+                ▶ Open Videos
+            </a>
+
+            <button
+                id="modalCertificate"
+                class="btn btn-cert"
+            >
+                🏆 Certificate
+            </button>
+
+        </div>
+
     </div>
-    <h3>What you will learn</h3>
-    <ul id="modalTopics"></ul>
-    <div class="modal-actions">
-      <button style="background:#075dbd" onclick="openResource('video')">▶ Open Videos</button>
-      <button style="background:#6240c5" onclick="downloadCertificate(currentCourse)">🏆 Download Certificate</button>
-    </div>
-  </div>
+
 </div>
 
-<script>
-const credentials={username:"admin",password:"12345"};
-let currentCourse="";
 
-const courseData={
- "Excel":{icon:"📗",desc:"Master spreadsheets for data cleaning, analysis, charts and reporting.",topics:["Data entry and formatting","Formulas and functions","Data cleaning","Sorting and filtering","Pivot Tables","Charts and reports"],notes:"YOUR_EXCEL_NOTES_LINK",video:"https://drive.google.com/drive/folders/1ZNZ9x45vs8H-HtyryU8KTnOHcTjNyIdS"},
- "SQL":{icon:"🗄️",desc:"Learn how to query, filter, join and analyze relational data.",topics:["SELECT and WHERE","GROUP BY and HAVING","Joins","Subqueries","Aggregate functions","Real-world SQL analysis"],notes:"YOUR_SQL_NOTES_LINK",video:"YOUR_SQL_VIDEO_LINK"},
- "Python":{icon:"🐍",desc:"Use Python for data manipulation, analysis and visualization.",topics:["Python basics","Variables and data types","Lists, tuples and dictionaries","Pandas","NumPy","Data visualization"],notes:"YOUR_PYTHON_NOTES_LINK",video:"YOUR_PYTHON_VIDEO_LINK"},
- "Power BI":{icon:"📊",desc:"Build interactive dashboards and business intelligence reports.",topics:["Data import","Power Query","Data cleaning","Data model","DAX basics","Interactive dashboards"],notes:"YOUR_POWERBI_NOTES_LINK",video:"YOUR_POWERBI_VIDEO_LINK"},
- "Machine Learning":{icon:"🧠",desc:"Understand machine learning concepts, algorithms and applications.",topics:["ML fundamentals","Data preparation","Regression","Classification","Model evaluation","Real-world ML projects"],notes:"YOUR_ML_NOTES_LINK",video:"YOUR_ML_VIDEO_LINK"}
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        © 2026
+        <strong>Data Analyst Learning Portal</strong>
+    </p>
+
+    <p style="margin-top:8px;">
+        Learn • Practice • Build • Grow
+    </p>
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   COURSE DATA
+========================================= */
+
+const courses = {
+
+    "Excel": {
+
+        notes:
+        "https://drive.google.com/drive/folders/1ZNZ9x45vs8H-HtyryU8KTnOHcTjNyIdS?usp=drive_link",
+
+        video:
+        "https://docs.google.com/spreadsheets/d/1-s0Pke3PSntqASYxfvy3uYKDPtm-hYieB1QVCMmXVgA/edit?usp=drive_link",
+
+        desc:
+        "Data cleaning, analysis, formulas, charts and reporting using Microsoft Excel."
+
+    },
+
+
+    "SQL": {
+
+        notes:
+        "https://drive.google.com/drive/folders/1bMcVEHtN1FZx1ytTzLNcNsa5uzqU1hlo?usp=drive_link",
+
+        video:
+        "https://docs.google.com/spreadsheets/d/14gv9XEfDqWP-sG2126vHZu0-R8YN6l5zmcacABzdWes/edit?usp=drive_link",
+
+        desc:
+        "Learn SQL queries, joins, filtering, aggregation and database analysis."
+
+    },
+
+
+    "Python": {
+
+        notes:
+        "https://drive.google.com/drive/folders/1Z-yYA9EuSxAKvdKbCQ4ajf3B86DGv7GT?usp=drive_link",
+
+        video:
+        "https://docs.google.com/spreadsheets/d/1V-t8piBKwBKFTcbYys-KN5qDtysYt9EPZ_ssloZebbk/edit?usp=drive_link",
+
+        desc:
+        "Python programming, data analysis, Pandas, NumPy and visualization."
+
+    },
+
+
+    "Power BI": {
+
+        notes:
+        "https://drive.google.com/drive/folders/1KPEKh3I0e569pCpobuYXSdkKizDE3emI?usp=drive_link",
+
+        video:
+        "https://docs.google.com/spreadsheets/d/1KSSbbfTlCp6hxbW8YQ_TS_dhYGOsTfKQKW2yzViDdCQ/edit?usp=drive_link",
+
+        desc:
+        "Create interactive dashboards, reports and professional data visualizations."
+
+    },
+
+
+    "Machine Learning": {
+
+        notes:
+        "https://drive.google.com/drive/folders/1lJ4Kg9_znEJOa8ApLhh63la-gB0F5uFm?usp=drive_link",
+
+        video:
+        "https://docs.google.com/spreadsheets/d/134kQkwHjjd612tgWAdRz1c_j9tAnfXkKfoB-CKYpc4Q/edit?usp=drive_link",
+
+        desc:
+        "Machine Learning concepts, algorithms and real-world applications."
+
+    }
+
 };
 
+
+/* =========================================
+   LOGIN
+========================================= */
+
 function login(){
-  const u=document.getElementById("username").value.trim();
-  const p=document.getElementById("password").value;
-  if(u===credentials.username && p===credentials.password){
-    sessionStorage.setItem("loggedIn","yes");
-    document.getElementById("loginOverlay").classList.add("hidden");
-  }else{
-    document.getElementById("loginError").textContent="Invalid username or password.";
-  }
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const password =
+        document.getElementById("password").value.trim();
+
+    const error =
+        document.getElementById("loginError");
+
+
+    if(
+        username === "admin" &&
+        password === "12345"
+    ){
+
+        sessionStorage.setItem(
+            "portalLogin",
+            "yes"
+        );
+
+        document.getElementById(
+            "loginOverlay"
+        ).style.display = "none";
+
+    }
+
+    else{
+
+        error.style.display = "block";
+
+    }
+
 }
+
+
+/* =========================================
+   CHECK LOGIN
+========================================= */
+
+function checkLogin(){
+
+    const loggedIn =
+        sessionStorage.getItem("portalLogin");
+
+    if(loggedIn === "yes"){
+
+        document.getElementById(
+            "loginOverlay"
+        ).style.display = "none";
+
+    }
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
 function logout(){
-  sessionStorage.removeItem("loggedIn");
-  document.getElementById("loginOverlay").classList.remove("hidden");
+
+    sessionStorage.removeItem(
+        "portalLogin"
+    );
+
+    location.reload();
+
 }
-if(sessionStorage.getItem("loggedIn")==="yes") document.getElementById("loginOverlay").classList.add("hidden");
+
+
+/* =========================================
+   DARK / LIGHT MODE
+========================================= */
 
 function toggleTheme(){
-  document.body.classList.toggle("dark");
-  localStorage.setItem("theme",document.body.classList.contains("dark")?"dark":"light");
-}
-if(localStorage.getItem("theme")==="dark") document.body.classList.add("dark");
 
-function openCourse(name){
-  currentCourse=name;
-  const c=courseData[name];
-  document.getElementById("modalIcon").textContent=c.icon;
-  document.getElementById("modalTitle").textContent=name+" Course";
-  document.getElementById("modalDesc").textContent=c.desc;
-  document.getElementById("modalTopics").innerHTML=c.topics.map(x=>"<li>"+x+"</li>").join("");
-  document.getElementById("courseModal").style.display="flex";
+    document.body.classList.toggle("dark");
+
+    const isDark =
+        document.body.classList.contains("dark");
+
+    localStorage.setItem(
+        "portalTheme",
+        isDark ? "dark" : "light"
+    );
+
+    document.getElementById(
+        "themeButton"
+    ).textContent =
+        isDark ? "☀️" : "🌙";
+
 }
-function closeModal(){document.getElementById("courseModal").style.display="none"}
-function openResource(type){
-  const url=courseData[currentCourse][type];
-  if(url && !url.startsWith("YOUR_")) window.open(url,"_blank");
-  else alert("Please replace the "+type+" link for "+currentCourse+" in the code.");
+
+
+function loadTheme(){
+
+    const theme =
+        localStorage.getItem("portalTheme");
+
+    if(theme === "dark"){
+
+        document.body.classList.add("dark");
+
+        document.getElementById(
+            "themeButton"
+        ).textContent = "☀️";
+
+    }
+
 }
-function chooseCertificate(){
-  const name=prompt("Enter course name: Excel, SQL, Python, Power BI or Machine Learning",currentCourse||"Excel");
-  if(name && courseData[name]) downloadCertificate(name);
-  else if(name) alert("Please enter one of the available course names.");
+
+
+/* =========================================
+   COURSE MODAL
+========================================= */
+
+function openCourse(courseName){
+
+    const course =
+        courses[courseName];
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent = courseName;
+
+    document.getElementById(
+        "modalDescription"
+    ).textContent = course.desc;
+
+    document.getElementById(
+        "modalNotes"
+    ).href = course.notes;
+
+    document.getElementById(
+        "modalVideo"
+    ).href = course.video;
+
+    document.getElementById(
+        "modalCertificate"
+    ).onclick = function(){
+
+        downloadCertificate(courseName);
+
+    };
+
+
+    document.getElementById(
+        "courseModal"
+    ).style.display = "flex";
+
 }
+
+
+function closeCourseModal(){
+
+    document.getElementById(
+        "courseModal"
+    ).style.display = "none";
+
+}
+
+
+function closeModal(event){
+
+    if(event.target.id === "courseModal"){
+
+        closeCourseModal();
+
+    }
+
+}
+
+
+/* =========================================
+   CERTIFICATE SELECT
+========================================= */
+
+function downloadSelectedCertificate(){
+
+    const course =
+        document.getElementById(
+            "certificateCourse"
+        ).value;
+
+    downloadCertificate(course);
+
+}
+
+
+/* =========================================
+   CERTIFICATE PDF
+========================================= */
 
 function downloadCertificate(course){
-  const {jsPDF}=window.jspdf;
-  if(!jsPDF){alert("Certificate library could not load. Please connect to the internet and try again.");return}
-  const student=prompt("Enter student name:", "Student Name") || "Student Name";
-  const doc=new jsPDF({orientation:"landscape",unit:"mm",format:"a4"});
-  doc.setFillColor(248,252,255);doc.rect(0,0,297,210,"F");
-  doc.setDrawColor(226,183,53);doc.setLineWidth(3);doc.rect(10,10,277,190);
-  doc.setDrawColor(30,90,160);doc.setLineWidth(1);doc.rect(16,16,265,178);
-  doc.setTextColor(6,43,85);doc.setFont("helvetica","bold");doc.setFontSize(30);
-  doc.text("CERTIFICATE OF COMPLETION",148.5,52,{align:"center"});
-  doc.setFont("helvetica","normal");doc.setFontSize(15);doc.setTextColor(70,90,110);
-  doc.text("This certificate is proudly presented to",148.5,72,{align:"center"});
-  doc.setFont("helvetica","bold");doc.setFontSize(27);doc.setTextColor(20,80,150);
-  doc.text(student,148.5,91,{align:"center"});
-  doc.setFont("helvetica","normal");doc.setFontSize(15);doc.setTextColor(70,90,110);
-  doc.text("for successfully completing the",148.5,110,{align:"center"});
-  doc.setFont("helvetica","bold");doc.setFontSize(23);doc.setTextColor(45,45,55);
-  doc.text(course+" Course",148.5,127,{align:"center"});
-  doc.setFont("helvetica","normal");doc.setFontSize(12);
-  doc.text("Data Analyst Learning Portal",148.5,143,{align:"center"});
-  doc.text("Course Completion Certificate",148.5,153,{align:"center"});
-  doc.setFontSize(10);doc.text("Issued: "+new Date().toLocaleDateString(),40,174);
-  doc.text("Authorized by Learning Portal",257,174,{align:"right"});
-  doc.save(course.replaceAll(" ","_")+"_Certificate.pdf");
+
+    const { jsPDF } =
+        window.jspdf;
+
+
+    const doc =
+        new jsPDF({
+
+            orientation:"landscape",
+
+            unit:"mm",
+
+            format:"a4"
+
+        });
+
+
+    /* Outer Border */
+
+    doc.setLineWidth(2.5);
+
+    doc.rect(
+        12,
+        12,
+        273,
+        183
+    );
+
+
+    /* Inner Border */
+
+    doc.setLineWidth(.8);
+
+    doc.rect(
+        18,
+        18,
+        261,
+        171
+    );
+
+
+    /* Heading */
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(28);
+
+    doc.text(
+        "CERTIFICATE OF COMPLETION",
+        148,
+        55,
+        {
+            align:"center"
+        }
+    );
+
+
+    /* Description */
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(15);
+
+    doc.text(
+        "This certificate is proudly presented for successfully completing",
+        148,
+        78,
+        {
+            align:"center"
+        }
+    );
+
+
+    /* Course */
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(27);
+
+    doc.text(
+        course,
+        148,
+        105,
+        {
+            align:"center"
+        }
+    );
+
+
+    /* Portal */
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(15);
+
+    doc.text(
+        "Data Analyst Learning Portal",
+        148,
+        126,
+        {
+            align:"center"
+        }
+    );
+
+
+    doc.text(
+        "Learn • Practice • Grow",
+        148,
+        145,
+        {
+            align:"center"
+        }
+    );
+
+
+    /* Footer */
+
+    doc.setFontSize(11);
+
+    doc.text(
+        "Course Completion Certificate",
+        148,
+        168,
+        {
+            align:"center"
+        }
+    );
+
+
+    /* Download */
+
+    const filename =
+        course.replace(
+            /\s+/g,
+            "_"
+        ) + "_Certificate.pdf";
+
+
+    doc.save(filename);
+
 }
+
+
+/* =========================================
+   ENTER KEY LOGIN
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Enter" &&
+            document.getElementById(
+                "loginOverlay"
+            ).style.display !== "none"
+        ){
+
+            login();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   START
+========================================= */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        loadTheme();
+
+        checkLogin();
+
+    }
+);
+
 </script>
+
 </body>
 </html>
